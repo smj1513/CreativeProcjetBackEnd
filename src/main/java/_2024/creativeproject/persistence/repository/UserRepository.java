@@ -1,6 +1,6 @@
-package _2024.creativeproject.repository;
+package _2024.creativeproject.persistence.repository;
 
-import _2024.creativeproject.entity.UserEntity;
+import _2024.creativeproject.persistence.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

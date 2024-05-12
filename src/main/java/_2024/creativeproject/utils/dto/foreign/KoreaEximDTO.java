@@ -1,4 +1,4 @@
-package _2024.creativeproject.utillity.dto;
+package _2024.creativeproject.utils.dto.foreign;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Data
-public class KoreaEximDTO {
+public class  KoreaEximDTO {
     @Getter(onMethod_ = {@JsonProperty("result")})
     @Setter(onMethod_ = {@JsonProperty("result")})
     private long result;

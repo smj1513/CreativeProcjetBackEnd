@@ -1,4 +1,4 @@
-package _2024.creativeproject.utillity.dto;
+package _2024.creativeproject.utils.dto.foreign;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

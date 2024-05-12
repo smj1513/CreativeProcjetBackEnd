@@ -1,11 +1,12 @@
-package _2024.creativeproject.controller;
+package _2024.creativeproject.network.controller;
 
-import _2024.creativeproject.annotation.QueryStringArgResolver;
-import _2024.creativeproject.dto.user.JoinDTO;
-import _2024.creativeproject.dto.user.LoginDTO;
-import _2024.creativeproject.dto.user.UserDTO;
+import _2024.creativeproject.config.annotation.QueryStringArgResolver;
+import _2024.creativeproject.network.dto.user.JoinDTO;
+import _2024.creativeproject.network.dto.user.LoginDTO;
+import _2024.creativeproject.network.dto.user.UserDTO;
 import _2024.creativeproject.exception.LoginInfoNotFoundException;
 import _2024.creativeproject.service.UserService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -24,9 +25,7 @@ public class UserController {
 	public ResponseEntity<UserDTO> login(@QueryStringArgResolver LoginDTO loginDTO) {
 		ResponseEntity<UserDTO> response = null;
 		try {
-			UserDTO user = userService.login(loginDTO);
-			user.setResponseMessage("정상적으로 로그인 되었습니다.");
-			response = ResponseEntity.ok(user);
+			response = ResponseEntity.ok(userService.login(loginDTO));
 		} catch (LoginInfoNotFoundException e) {
 			UserDTO userResponseDTO = new UserDTO();
 			userResponseDTO.setResponseMessage(e.getMessage());
@@ -35,15 +34,27 @@ public class UserController {
 		return response;
 	}
 
+	@GetMapping("/dupCheck")
+	@ResponseStatus(code = HttpStatus.OK)
+	public Boolean dupCheck(@RequestParam String userId){
+		return userService.isDup(userId);
+	}
+
 
 	@PostMapping("/join")
-	public ResponseEntity<String> join(@QueryStringArgResolver JoinDTO joinDTO) {
-		ResponseEntity<String> response = null;
+	public ResponseEntity<UserDTO> join(@RequestBody JoinDTO joinDTO) {
+		ResponseEntity<UserDTO> response = null;
 		try {
-			userService.join(joinDTO);
-			response = ResponseEntity.ok("회원가입에 성공하였습니다.");
+			UserDTO user = userService.join(joinDTO);
+			user.setResponseMessage("회원가입에 성공하였습니다.");
+			response = ResponseEntity.ok(user);
 		} catch (RuntimeException e) {
-			response = ResponseEntity.status(HttpStatus.CONFLICT).body("회원 가입에 실패하였습니다. 사유 : " + e.getMessage());
+			response = ResponseEntity
+					.status(HttpStatus.CONFLICT)
+					.body(UserDTO
+							.builder()
+							.responseMessage("회원 가입에 실패하였습니다. 사유 : " + e.getMessage())
+							.build());
 		}
 		return response;
 

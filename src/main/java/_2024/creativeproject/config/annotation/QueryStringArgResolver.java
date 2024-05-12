@@ -1,4 +1,4 @@
-package _2024.creativeproject.annotation;
+package _2024.creativeproject.config.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

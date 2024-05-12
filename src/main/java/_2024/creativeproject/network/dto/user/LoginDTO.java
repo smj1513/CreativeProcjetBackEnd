@@ -1,4 +1,4 @@
-package _2024.creativeproject.dto.user;
+package _2024.creativeproject.network.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

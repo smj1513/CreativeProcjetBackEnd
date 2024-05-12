@@ -1,4 +1,4 @@
-package _2024.creativeproject.annotation;
+package _2024.creativeproject.config.annotation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,10 +1,9 @@
-package _2024.creativeproject.entity;
+package _2024.creativeproject.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,23 +19,31 @@ public class TodoEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	private String text;
+	@Column
+	private String title;
+
+	@Column
+	private String content;
+
+	@Column
+	private Boolean isCompleted;
 
 	@CreatedDate
 	@Column
 	private LocalDateTime createdDate;
+
 	@Column
 	private LocalDateTime dueDate;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn
 	private UserEntity user;
 
 	@Override
 	public String toString() {
 		return "TodoEntity{" +
 				"id=" + id +
-				", text='" + text + '\'' +
+				", text='" + content + '\'' +
 				", dueDate=" + dueDate +
 				'}';
 	}

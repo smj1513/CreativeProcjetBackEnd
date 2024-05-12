@@ -1,4 +1,4 @@
-package _2024.creativeproject.network.dto;
+package _2024.creativeproject.network.dto.foreign;
 
 import lombok.Builder;
 import lombok.Data;
