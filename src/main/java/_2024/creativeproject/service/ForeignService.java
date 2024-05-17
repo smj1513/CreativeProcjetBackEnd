@@ -45,13 +45,8 @@ public class ForeignService {
 	}
 
 	public List<ExchangeResDTO> getCurrencyList() {
-		List<ExchangeResDTO> exchangeResDTOS = new ArrayList<>();
-		currencyRepository.findClosestByRegisteredDate().ifPresent((currencyList) -> {
-			currencyList.forEach(currency -> {
-				exchangeResDTOS.add(ExchangeResDTO.from(currency));
-			});
-		});
-		return exchangeResDTOS;
+		List<Currency> currencies = currencyRepository.findClosestByRegisteredDate().orElseThrow();
+		return currencies.stream().map(ExchangeResDTO::from).toList();
 	}
 
 	public List<ItemDTO> search(String itemName) throws JsonProcessingException {

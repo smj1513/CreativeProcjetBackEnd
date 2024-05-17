@@ -19,14 +19,6 @@ import java.util.List;
 @CrossOrigin
 public class ForeignController {
 	private final ForeignService foreignService;
-	/*@GetMapping("/rateItem")
-	public RateItemResDTO rateItem(@QueryStringArgResolver RateItemRequestDTO rateItemRequestDTO){
-		try {
-			return foreignService.rateItemCalc(rateItemRequestDTO);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}*/
 
 	@GetMapping("/exchange")
 	public ResponseEntity<Integer> exchange(@RequestParam int price, @RequestParam CurrencyUnit currency) {
@@ -35,7 +27,6 @@ public class ForeignController {
 
 	@GetMapping("/currency")
 	public List<ExchangeResDTO> currency() {
-		log.info("currency get request");
 		return foreignService.getCurrencyList();
 	}
 

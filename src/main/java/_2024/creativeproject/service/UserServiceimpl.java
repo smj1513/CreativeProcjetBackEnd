@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.function.Supplier;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceimpl implements UserService {
@@ -40,7 +42,9 @@ public class UserServiceimpl implements UserService {
 		if (isDup(joinDTO.getId())) {
 			throw new AlreadyDataException("이미 존재하는 ID 입니다.");
 		} else {
-			return UserDTO.from(userRepository.save(joinMapper.map(joinDTO)));
+			UserDTO user = UserDTO.from(userRepository.save(joinMapper.map(joinDTO)));
+			userRepository.flush();
+			return user;
 		}
 	}
 
@@ -48,5 +52,6 @@ public class UserServiceimpl implements UserService {
 	public boolean isDup(String id) {
 		return userRepository.findByLoginId(id).isPresent();
 	}
+
 
 }

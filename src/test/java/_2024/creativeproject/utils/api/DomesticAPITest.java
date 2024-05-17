@@ -27,14 +27,14 @@ class DomesticAPITest {
 
 	@Test
 	void test(){
-		String url = domesticAPI.getContentUrl(126.981611, 37.568477, 39);
+		String url = domesticAPI.getContentUrl("126.981611", "37.568477", 39);
 		log.info(url);
 	}
 
 	@Test
 	void test2(){
 		try {
-			log.info(domesticAPI.get().toString());
+			log.info(domesticAPI.get("128.3902984", "36.1539771", 39).toString());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

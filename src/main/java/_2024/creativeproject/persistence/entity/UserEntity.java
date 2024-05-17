@@ -18,16 +18,15 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class UserEntity {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-
-	@Column(nullable = false)
-	private String name;
+	private Long id;
 
 	@Column(nullable = false, unique = true)
 	private String loginId;
+
+	@Column(nullable = false)
+	private String name;
 
 	@Column(nullable = false)
 	private String password;

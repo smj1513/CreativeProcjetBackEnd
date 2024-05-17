@@ -1,9 +1,11 @@
 package _2024.creativeproject.persistence.entity;
 
+import _2024.creativeproject.network.dto.todo.TodoDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,7 +19,7 @@ public class TodoEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	@Column
 	private String title;
@@ -33,11 +35,21 @@ public class TodoEntity {
 	private LocalDateTime createdDate;
 
 	@Column
-	private LocalDateTime dueDate;
+	private LocalDate dueDate;
 
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(name = "user_id")
 	private UserEntity user;
+
+	public static TodoEntity of(TodoDTO todoDTO, UserEntity user){
+		return TodoEntity.builder()
+				.title(todoDTO.getTitle())
+				.content(todoDTO.getContent())
+				.dueDate(todoDTO.getDueDate())
+				.createdDate(LocalDateTime.now())
+				.user(user)
+				.isCompleted(todoDTO.getIsCompleted()).build();
+	}
 
 	@Override
 	public String toString() {

@@ -1,5 +1,6 @@
 package _2024.creativeproject.network.dto.user;
 
+import _2024.creativeproject.network.dto.todo.TodoDTO;
 import _2024.creativeproject.persistence.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -11,4 +11,5 @@ public interface UserService {
 	UserDTO join(JoinDTO joinDTO);
 
 	boolean isDup(String id);
+	
 }
