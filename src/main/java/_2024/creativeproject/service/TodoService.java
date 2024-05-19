@@ -22,7 +22,7 @@ public class TodoService {
 	@Transactional
 	public List<TodoDTO> insert(TodoDTO todoDTO) throws IllegalArgumentException {
 		Optional<UserEntity> user = userRepository.findByLoginId(todoDTO.getUserId());
-		UserEntity user1 = user.orElseThrow(IllegalArgumentException::new);
+		UserEntity user1 = user.orElseThrow(()->new IllegalArgumentException("사용자 정보가 없습니다."));
 		TodoEntity todoEntity = TodoEntity.of(todoDTO, user1);
 		List<TodoEntity> todoList = user1.getTodoList();
 		todoList.add(todoEntity);
@@ -33,7 +33,7 @@ public class TodoService {
 	@Transactional
 	public List<TodoDTO> update(TodoDTO todoDTO) throws IllegalArgumentException {
 		Optional<TodoEntity> todoEntity = toDoRepository.findById(todoDTO.getId());
-		TodoEntity todo = todoEntity.orElseThrow(IllegalArgumentException::new);
+		TodoEntity todo = todoEntity.orElseThrow(()->new IllegalArgumentException("해당되는 할 일 정보가 없습니다"));
 		todo.setTitle(todoDTO.getTitle());
 		todo.setContent(todoDTO.getContent());
 		todo.setDueDate(todoDTO.getDueDate());
@@ -43,7 +43,7 @@ public class TodoService {
 
 	@Transactional
 	public List<TodoDTO> check(Long todoId) throws IllegalArgumentException {
-		TodoEntity todo = toDoRepository.findById(todoId).orElseThrow(IllegalArgumentException::new);
+		TodoEntity todo = toDoRepository.findById(todoId).orElseThrow(()->new IllegalArgumentException("해당되는 할 일 정보가 없습니다."));
 		todo.setIsCompleted(!todo.getIsCompleted());
 		List<TodoEntity> todoList = todo.getUser().getTodoList();
 		return todoList.stream().map(TodoDTO::from).toList();
@@ -52,7 +52,7 @@ public class TodoService {
 	@Transactional
 	public List<TodoDTO> delete(Long todoId) throws IllegalArgumentException{
 		Optional<TodoEntity> todoEntity = toDoRepository.findById(todoId);
-		TodoEntity todo = todoEntity.orElseThrow(IllegalArgumentException::new);
+		TodoEntity todo = todoEntity.orElseThrow(()->new IllegalArgumentException("해당되는 할 일 정보가 없습니다."));
 		toDoRepository.delete(todo);
 		return toDoRepository.findByUserId(todo.getUser().getId()).stream().map(TodoDTO::from).toList();
 	}
@@ -60,7 +60,7 @@ public class TodoService {
 	public List<TodoDTO> getTodoList(String loginId) throws IllegalArgumentException{
 		return userRepository
 				.findByLoginId(loginId)
-				.orElseThrow(IllegalArgumentException::new)
+				.orElseThrow(()->new IllegalArgumentException("사용자 정보가 없습니다."))
 				.getTodoList()
 				.stream()
 				.map(TodoDTO::from)
