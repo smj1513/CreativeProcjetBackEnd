@@ -39,4 +39,13 @@ class DomesticAPITest {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@Test
+	void allPlace(){
+		try {
+			log.info(domesticAPI.get("128.3902984", "36.1539771",0).toString());
+		}catch (IOException e){
+			log.info(e.getMessage());
+		}
+	}
 }

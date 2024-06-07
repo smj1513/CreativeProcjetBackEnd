@@ -4,6 +4,8 @@ import _2024.creativeproject.network.dto.domestic.AllPlaceResponseDTO;
 import _2024.creativeproject.network.dto.domestic.PlaceResponseDTO;
 import _2024.creativeproject.utils.api.DomesticAPI;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class DomesticService {
+	private static final Logger log = LoggerFactory.getLogger(DomesticService.class);
 	private final DomesticAPI domesticAPI;
 
 	public List<PlaceResponseDTO> placeSearch(String xPos, String yPos, Integer contentTypeId) throws IOException {
@@ -28,7 +31,7 @@ public class DomesticService {
 		List<PlaceResponseDTO> allList = domesticAPI.get(xPos, yPos, 0).stream().map(PlaceResponseDTO::from).toList();
 		Map<Integer, List<PlaceResponseDTO>> categorizedPlaces = allList.stream()
 				.collect(Collectors.groupingBy(PlaceResponseDTO::getContentTypeId));
-
+		log.info(categorizedPlaces.toString());
 		return AllPlaceResponseDTO.builder()
 				.accommodationList(categorizedPlaces.getOrDefault(32, new ArrayList<>()))
 				.cultureList(categorizedPlaces.getOrDefault(14, new ArrayList<>()))
