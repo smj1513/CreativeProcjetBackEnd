@@ -46,6 +46,21 @@ class EximAPITest {
 	}
 
 	@Test
+	void 환율정보요청(){
+		try {
+			Optional<List<Currency>> exim = eximApi.getExim();
+			exim.ifPresent(currencies -> {
+				log.info("URL : {}", eximApi.getUrl());
+				currencies.forEach(currency -> {
+					log.info(currency.toString());
+				});
+			});
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Test
 	void findUnit(){
 		Optional<Currency> byCurrencyUnit = currencyRepository.findByCurrencyUnit(CurrencyUnit.JPY);
 
