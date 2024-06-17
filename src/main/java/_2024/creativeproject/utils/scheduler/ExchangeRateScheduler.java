@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +25,8 @@ public class ExchangeRateScheduler {
 		try {
 			Optional<List<Currency>> exim = eximApi.getExim();
 			exim.ifPresent(currencyRepository::saveAll);
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			log.error(e);
 		}
 	}
 ///*

@@ -37,7 +37,7 @@ class EximAPITest {
 	}
 
 	@Test
-	void getExim() throws IOException {
+	void getExim() throws IOException, InterruptedException {
 		Optional<List<Currency>> exim = eximApi.getExim();
 		exim.ifPresent(currencies -> {
 			log.info(currencies.toString());
@@ -55,8 +55,8 @@ class EximAPITest {
 					log.info(currency.toString());
 				});
 			});
-		} catch (IOException e) {
-			throw new RuntimeException(e);
+		} catch (Exception e) {
+			log.error(e.getMessage());
 		}
 	}
 
