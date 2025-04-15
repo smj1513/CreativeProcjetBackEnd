@@ -21,7 +21,7 @@ import java.util.Optional;
 class EximAPITest {
 
 	private static final Logger log = LoggerFactory.getLogger(EximAPITest.class);
-	@Autowired
+	@AutoWired
 	EximAPI eximApi;
 
 	@Autowired
